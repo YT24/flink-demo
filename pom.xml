@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.example</groupId>
+    <artifactId>flink-demo</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>flink-demo</name>
+    <description>flink-demo</description>
+    <packaging>jar</packaging>
+    <properties>
+        <java.version>8</java.version>
+        <flink.version>1.16.2</flink.version>
+        <scala.binary.version>2.12</scala.binary.version>
+        <flink.mysql.cdc.version>2.3.0</flink.mysql.cdc.version>
+        <doris.version>1.6.0</doris.version>
+        <hadoop.version>3.0.0</hadoop.version>
+        <hutool-all.version>5.8.0</hutool-all.version>
+        <oracle-cdc.version>2.3.0</oracle-cdc.version>
+        <mysql-cdc.version>2.3.0</mysql-cdc.version>
+        <sqlserver-cdc.version>2.3.0</sqlserver-cdc.version>
+        <pinyin4j-path.version>2.5.1</pinyin4j-path.version>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.12</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-scala_${scala.binary.version}</artifactId>
+            <version>${flink.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-table-planner_${scala.binary.version}</artifactId>
+            <version>${flink.version}</version>
+            <!--            <scope>provided</scope>-->
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.flink/flink-table-api-java-bridge -->
+        <!--new-->
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-table-api-java-bridge</artifactId>
+            <version>${flink.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-connector-hive_${scala.binary.version}</artifactId>
+            <version>${flink.version}</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-table-common</artifactId>
+            <version>${flink.version}</version>
+        </dependency>
+
+        <!-- 15.2->13.6 _${scala.binary.version}-->
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-clients</artifactId>
+            <version>${flink.version}</version>
+        </dependency>
+
+        <!-- 15.2->13.6 _${scala.binary.version}-->
+        <!-- flink-connector-kafka -->
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-connector-kafka</artifactId>
+            <version>${flink.version}</version>
+        </dependency>
+
+        <!-- 15.2->13.6 _${scala.binary.version}-->
+        <!-- flink-connector-jdbc -->
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-connector-jdbc</artifactId>
+            <version>${flink.version}</version>
+        </dependency>
+
+        <!-- flink-connector-mysql-cdc -->
+        <dependency>
+            <groupId>com.ververica</groupId>
+            <artifactId>flink-connector-mysql-cdc</artifactId>
+            <version>${mysql-cdc.version}</version>
+        </dependency>
+
+        <!-- flink-connector-oracle-cdc -->
+        <dependency>
+            <groupId>com.ververica</groupId>
+            <artifactId>flink-connector-oracle-cdc</artifactId>
+            <version>${oracle-cdc.version}</version>
+        </dependency>
+
+        <!-- flink-connector-sqlserver-cdc-->
+        <dependency>
+            <groupId>com.ververica</groupId>
+            <artifactId>flink-connector-sqlserver-cdc</artifactId>
+            <version>${sqlserver-cdc.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-shaded-guava</artifactId>
+            <version>30.1.1-jre-15.0</version>
+        </dependency>
+        <!--        mysql-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.29</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-json</artifactId>
+            <version>${flink.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-csv</artifactId>
+            <version>${flink.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.doris</groupId>
+            <artifactId>flink-doris-connector-1.16</artifactId>
+            <version>1.6.0</version>
+        </dependency>
+    </dependencies>
+
+
+    <build>
+        <finalName>flink-demo</finalName>
+        <plugins>
+            <!-- Java Compiler -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.2</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.1.1</version>
+                <configuration>
+                    <createDependencyReducedPom>false</createDependencyReducedPom>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <artifactSet>
+                                <excludes>
+                                    <exclude>com.google.code.findbugs:jsr305</exclude>
+                                </excludes>
+                            </artifactSet>
+                            <filters>
+                                <filter>
+                                    <!-- Do not copy the signatures in the META-INF folder.
+                                    Otherwise, this might cause SecurityExceptions when using the JAR. -->
+                                    <artifact>*:*</artifact>
+                                    <excludes>
+                                        <exclude>META-INF/*.SF</exclude>
+                                        <exclude>META-INF/*.DSA</exclude>
+                                        <exclude>META-INF/*.RSA</exclude>
+                                    </excludes>
+                                </filter>
+                            </filters>
+                            <transformers>
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <!-- Replace this with the main class of your job -->
+                                    <mainClass>com.senyaoxy.metadata.triggernew.HudiToKafka</mainClass>
+                                </transformer>
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+                            </transformers>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
